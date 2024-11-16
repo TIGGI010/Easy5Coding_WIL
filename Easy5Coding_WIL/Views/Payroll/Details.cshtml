@@ -1,0 +1,33 @@
+﻿@model Easy5Coding_WIL.Models.Payroll
+
+<h2>Payroll Details</h2>
+
+<div class="list-group">
+    <div class="list-group-item">
+        <strong>Employee ID:</strong> @Model.EmployeeID
+    </div>
+    <div class="list-group-item">
+        <strong>Salary:</strong> @Model.Salary.ToString("C")
+    </div>
+    <div class="list-group-item">
+        <strong>Deductions:</strong> @Model.Deductions.ToString("C")
+    </div>
+    <div class="list-group-item">
+        <strong>Bonuses:</strong> @Model.Bonuses.ToString("C")
+    </div>
+    <div class="list-group-item">
+        <strong>Net Pay:</strong>
+        <span class="@(Model.NetPay < 0 ? "text-danger" : "text-success")">@Model.NetPay.ToString("C")</span>
+    </div>
+    <div class="list-group-item">
+        <strong>Pay Period:</strong> @Model.PayPeriod
+    </div>
+    <div class="list-group-item">
+        <strong>Pay Date:</strong> @Model.PayDate.ToString("MM/dd/yyyy")
+    </div>
+    <div class="list-group-item">
+        <strong>Notes:</strong> @(string.IsNullOrWhiteSpace(Model.Notes) ? "None" : Model.Notes)
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>

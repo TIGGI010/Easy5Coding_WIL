@@ -1,0 +1,87 @@
+﻿@model Easy5Coding_WIL.Models.User
+
+<h2>Employee Dashboard</h2>
+
+<div class="dashboard-container">
+    <!-- Employee Details -->
+    <div class="card">
+        <h3>Welcome, @Model.EmployeeDetails?.FirstName @Model.EmployeeDetails?.LastName!</h3>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Role:</strong> @Model.Role ?? "N/A"</p>
+        <p><strong>Department:</strong> @Model.EmployeeDetails?.Department ?? "Not Assigned"</p>
+        <p><strong>Salary:</strong> R @Model.EmployeeDetails?.Salary.ToString("F2") ?? "0.00"</p>
+        <p><strong>Leave Balance:</strong> @Model.EmployeeDetails?.LeaveBalance ?? "0"</p>
+        <p><strong>Employment Start Date:</strong> @Model.EmployeeDetails?.EmploymentStartDate.ToShortDateString() ?? "N/A"</p>
+    </div>
+
+    <!-- Leave Requests -->
+    <div class="card">
+        <h4>Leave Requests</h4>
+        @if (Model.LeaveRequests != null && Model.LeaveRequests.Any())
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var request in Model.LeaveRequests)
+                    {
+                        <tr>
+                            <td>@request.LeaveType</td>
+                            <td>@request.Status</td>
+                            <td>@request.StartDate.ToShortDateString()</td>
+                            <td>@request.EndDate.ToShortDateString()</td>
+                            <td>@request.Reason</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No leave requests found.</p>
+        }
+        <a asp-controller="Leave" asp-action="RequestLeave" class="btn btn-primary mt-2">Request Leave</a>
+    </div>
+
+    <!-- Payroll -->
+    <div class="card">
+        <h4>Payroll Information</h4>
+        @if (Model.Payroll != null)
+        {
+            <p><strong>Net Pay:</strong> R @Model.Payroll.NetPay.ToString("F2")</p>
+            <p><strong>Bonuses:</strong> R @Model.Payroll.Bonuses.ToString("F2")</p>
+            <p><strong>Deductions:</strong> R @Model.Payroll.Deductions.ToString("F2")</p>
+            <p><strong>Pay Date:</strong> @Model.Payroll.PayDate.ToShortDateString()</p>
+            <p><strong>Notes:</strong> @Model.Payroll.Notes</p>
+        }
+        else
+        {
+            <p>No payroll data available.</p>
+        }
+    </div>
+</div>
+
+<style>
+    .dashboard-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    .card {
+        background: #f9f9f9;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .table {
+        margin-top: 1rem;
+    }
+</style>

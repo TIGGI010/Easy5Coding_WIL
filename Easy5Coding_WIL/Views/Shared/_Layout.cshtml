@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Easy 5 HR</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        /* Global Styles */
+        body {
+            background-color: #f8f9fa;
+            background-image: url('@Url.Content("~/images/webAppBack.png")');
+            background-size: cover; /* Ensures the image covers the entire viewport */
+            background-repeat: no-repeat; /* Prevents tiling */
+            background-attachment: fixed; /* Keeps the background in place while scrolling */
+            color: #343a40;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding-top: 70px; /* Adjust based on navbar height */
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding-top: 70px; /* Adjust based on navbar height */
+        }
+
+        /* Transparent Navbar Styles */
+        .navbar {
+            background-color: transparent !important;
+            box-shadow: none;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+        }
+
+        .navbar-brand {
+            color: #004aad;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 8px 15px;
+            color: #343a40;
+            background-color: transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: black;
+                background-color: whitesmoke;
+            }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        /* Profile Image */
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 2px solid #000000;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #ffffff;
+            color: #343a40;
+            padding: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+            .footer a {
+                color: #00000;
+                text-decoration: none;
+            }
+
+                .footer a:hover {
+                    color: #004aad;
+                    text-decoration: underline;
+                }
+
+        /* Main Content Styles */
+        .container {
+            margin-top: 30px;
+        }
+
+        /* Button Styles */
+        .modern-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1rem;
+            color: white;
+            background-color: black; /* Default black button */
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .modern-btn:hover {
+                background-color: #ffde59; /* Warm complementary color */
+                color: black; /* Black text for contrast */
+                box-shadow: 0 6px 12px rgba(255, 204, 51, 0.4); /* Glow effect */
+                transform: translateY(-2px);
+            }
+
+        .logout-btn {
+            color: white;
+            background-color: black;
+            border: none;
+            padding: 8px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .logout-btn:hover {
+                background-color: #ffde59;
+                color: black;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color: #010c53; font-weight: 800; font-size: 1.8rem;">
+                    EASY 5 HR
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("HRManager") || User.IsInRole("Manager"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
+                                </li>                               
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Employee")">Employees</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Leave")">Leave</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Payroll")">Payroll</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex align-items-center">
+                            <img src="~/images/Eo_circle_green_blank.svg.png" alt="Profile" class="profile-img" />
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="logout-btn">Logout</button>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            &copy; 2024 Easy5Coding_WIL | <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

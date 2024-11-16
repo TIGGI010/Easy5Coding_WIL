@@ -1,0 +1,51 @@
+﻿@inject Easy5Coding_WIL.FirebaseService FirebaseService
+
+<ul class="navbar-nav ml-auto">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="nav-item d-flex align-items-center">
+            <!-- Clickable Profile Image -->
+            <a asp-controller="Dashboard" asp-action="Dashboard" title="Go to Dashboard">
+                <img src="~/images/Eo_circle_green_blank.svg.png" alt="Profile" class="profile-img" />
+            </a>
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Manage" title="Manage">
+                Manage Account
+            </a>
+        </li>
+
+        @* Role-based display (Optional) *@
+        <li class="nav-item">
+            <span class="nav-link text-secondary">
+                (@User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value)
+            </span>
+        </li>
+
+        <li class="nav-item">
+            <form asp-controller="Account" asp-action="Logout" method="post" class="form-inline">
+                <button type="submit" class="nav-link btn btn-link text-dark" style="padding: 0;">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>
+
+<style>
+    .profile-img {
+        width: 40px; /* Adjust the size */
+        height: 40px; /* Adjust the size */
+        border-radius: 50%; /* Makes the image circular */
+        object-fit: cover; /* Ensures the image fits well within the circle */
+        margin-right: 10px;
+        border: 2px solid #007bff; /* Optional: Adds a border for aesthetics */
+        cursor: pointer; /* Indicates the image is clickable */
+    }
+</style>
+

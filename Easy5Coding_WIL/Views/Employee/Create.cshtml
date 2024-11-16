@@ -1,0 +1,120 @@
+﻿@model Easy5Coding_WIL.Models.EmployeeDetails
+
+<h2>Add New Employee</h2>
+
+<form asp-action="Create" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" placeholder="Enter last name" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Role and Department -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="JobRole"></label>
+                <input asp-for="JobRole" class="form-control" placeholder="Enter job role" />
+                <span asp-validation-for="JobRole" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Department"></label>
+                <input asp-for="Department" class="form-control" placeholder="Enter department" />
+                <span asp-validation-for="Department" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Info and Dates -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="ContactEmail"></label>
+                <input asp-for="ContactEmail" type="email" class="form-control" placeholder="example@domain.com" />
+                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="ContactPhone"></label>
+                <input asp-for="ContactPhone" class="form-control" placeholder="e.g., +123456789" />
+                <span asp-validation-for="ContactPhone" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="EmploymentStartDate"></label>
+                <input asp-for="EmploymentStartDate" type="date" class="form-control" />
+                <span asp-validation-for="EmploymentStartDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="EmploymentEndDate"></label>
+                <input asp-for="EmploymentEndDate" type="date" class="form-control" />
+                <span asp-validation-for="EmploymentEndDate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role and Active Status -->
+    <div class="form-group">
+        <label asp-for="Role"></label>
+        <select asp-for="Role" class="form-control">
+            <option value="">Select Role</option>
+            <option value="Employee">Employee</option>
+            <option value="HRManager">HR Manager</option>
+            <option value="Manager">Manager</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-check">
+        <input asp-for="IsActive" type="checkbox" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label">Active Status</label>
+        <span asp-validation-for="IsActive" class="text-danger"></span>
+    </div>
+
+    <!-- Salary, Position, and Leave Balance -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Salary"></label>
+                <input asp-for="Salary" type="number" step="0.01" min="0" class="form-control" placeholder="Enter salary" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="LeaveBalance"></label>
+                <input asp-for="LeaveBalance" type="number" min="0" class="form-control" placeholder="Leave days" />
+                <span asp-validation-for="LeaveBalance" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>

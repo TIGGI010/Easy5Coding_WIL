@@ -1,0 +1,91 @@
+﻿@model Easy5Coding_WIL.Models.Payroll
+
+<h2 class="mb-4">Add Payroll Entry</h2>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            <!-- Employee Selection -->
+            <div class="form-group mb-3">
+                <label asp-for="EmployeeID" class="form-label">Employee</label>
+                <select asp-for="EmployeeID" class="form-select" required>
+                    <option value="">Select Employee</option>
+                    <!-- Replace with dynamically populated options -->
+                    <option value="emp1">Employee 1</option>
+                    <option value="emp2">Employee 2</option>
+                </select>
+                <span asp-validation-for="EmployeeID" class="text-danger"></span>
+            </div>
+
+            <!-- Salary Input -->
+            <div class="form-group mb-3">
+                <label asp-for="Salary" class="form-label">Base Salary</label>
+                <input asp-for="Salary" type="number" step="0.01" class="form-control" id="salary" placeholder="Enter base salary" onchange="calculateNetPay()" required />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+
+            <!-- Deductions Input -->
+            <div class="form-group mb-3">
+                <label asp-for="Deductions" class="form-label">Deductions</label>
+                <input asp-for="Deductions" type="number" step="0.01" class="form-control" id="deductions" placeholder="Enter deductions" onchange="calculateNetPay()" required />
+                <span asp-validation-for="Deductions" class="text-danger"></span>
+            </div>
+
+            <!-- Bonuses Input -->
+            <div class="form-group mb-3">
+                <label asp-for="Bonuses" class="form-label">Bonuses</label>
+                <input asp-for="Bonuses" type="number" step="0.01" class="form-control" id="bonuses" placeholder="Enter bonuses" onchange="calculateNetPay()" required />
+                <span asp-validation-for="Bonuses" class="text-danger"></span>
+            </div>
+
+            <!-- Net Pay Display -->
+            <div class="form-group mb-3">
+                <label asp-for="NetPay" class="form-label">Net Pay</label>
+                <input asp-for="NetPay" type="text" class="form-control" id="netPay" readonly disabled />
+                <span asp-validation-for="NetPay" class="text-danger"></span>
+            </div>
+
+            <!-- Pay Period Selection -->
+            <div class="form-group mb-3">
+                <label asp-for="PayPeriod" class="form-label">Pay Period</label>
+                <select asp-for="PayPeriod" class="form-select" required>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Bi-Weekly">Bi-Weekly</option>
+                    <option value="Weekly">Weekly</option>
+                </select>
+            </div>
+
+            <!-- Pay Date Input -->
+            <div class="form-group mb-3">
+                <label asp-for="PayDate" class="form-label">Pay Date</label>
+                <input asp-for="PayDate" type="date" class="form-control" required />
+                <span asp-validation-for="PayDate" class="text-danger"></span>
+            </div>
+
+            <!-- Notes Input -->
+            <div class="form-group mb-3">
+                <label asp-for="Notes" class="form-label">Notes (Optional)</label>
+                <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Optional notes"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+
+            <!-- Save Button -->
+            <button type="submit" class="btn btn-primary">Save Entry</button>
+        </form>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+
+@section Scripts {
+    <script>
+        function calculateNetPay() {
+            var salary = parseFloat(document.getElementById("salary").value) || 0;
+            var deductions = parseFloat(document.getElementById("deductions").value) || 0;
+            var bonuses = parseFloat(document.getElementById("bonuses").value) || 0;
+            var netPay = salary + bonuses - deductions;
+
+            document.getElementById("netPay").value = netPay.toFixed(2);
+        }
+    </script>
+}

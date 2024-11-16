@@ -1,0 +1,63 @@
+﻿@model Easy5Coding_WIL.Models.EmployeeDetails
+
+<h2>Employee Details</h2>
+
+<div class="list-group">
+    <div class="list-group-item">
+        <strong>Employee ID:</strong> @Model.EmployeeID
+    </div>
+    <div class="list-group-item">
+        <strong>First Name:</strong> @Model.FirstName
+    </div>
+    <div class="list-group-item">
+        <strong>Last Name:</strong> @Model.LastName
+    </div>
+    <div class="list-group-item">
+        <strong>Job Role:</strong> @Model.JobRole
+    </div>
+    <div class="list-group-item">
+        <strong>Department:</strong> @Model.Department
+    </div>
+    <div class="list-group-item">
+        <strong>Contact Email:</strong> @Model.ContactEmail
+    </div>
+    <div class="list-group-item">
+        <strong>Contact Phone:</strong> @Model.ContactPhone
+    </div>
+    <div class="list-group-item">
+        <strong>Employment Start Date:</strong> @Model.EmploymentStartDate.ToString("MMMM dd, yyyy")
+    </div>
+    <div class="list-group-item">
+        <strong>Employment End Date:</strong> @(Model.EmploymentEndDate.HasValue ? Model.EmploymentEndDate.Value.ToString("MMMM dd, yyyy") : "Currently Employed")
+    </div>
+    <div class="list-group-item">
+        <strong>Address:</strong> @Model.Address
+    </div>
+    <div class="list-group-item">
+        <strong>Date of Birth:</strong> @Model.DateOfBirth.ToString("MMMM dd, yyyy")
+    </div>
+    <div class="list-group-item">
+        <strong>Emergency Contact Name:</strong> @Model.EmergencyContactName
+    </div>
+    <div class="list-group-item">
+        <strong>Emergency Contact Phone:</strong> @Model.EmergencyContactPhone
+    </div>
+    <div class="list-group-item">
+        <strong>Is Active:</strong> <span class="badge @(Model.IsActive ? "badge-success" : "badge-secondary")">@((Model.IsActive ? "Yes" : "No"))</span>
+    </div>
+
+    <div class="list-group-item">
+        <strong>Salary:</strong> @Model.Salary.ToString("C")
+    </div>
+    <div class="list-group-item">
+        <strong>Position Level:</strong> @Model.PositionLevel
+    </div>
+    <div class="list-group-item">
+        <strong>Leave Balance:</strong> @Model.LeaveBalance days
+    </div>
+    <div class="list-group-item">
+        <strong>Role:</strong> @Model.Role
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
