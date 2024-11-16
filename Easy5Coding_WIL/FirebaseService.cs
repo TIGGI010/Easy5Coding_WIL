@@ -140,33 +140,61 @@ namespace Easy5Coding_WIL
             }
         }
 
-        // Fetch all users (including employees) from Firebase
+        
+
         public async Task<List<User>> GetUsersAsync()
         {
             try
             {
-                var usersSnapshot = await _firebaseClient.Child("Users").OnceAsync<User>();
+                // Fetch raw JSON response from Firebase
 
-                if (usersSnapshot == null || !usersSnapshot.Any())
+                var firebaseResponse = await _firebaseClient.Child("Users").OnceAsync<Dictionary<string, dynamic>>();
+
+                if (firebaseResponse == null || !firebaseResponse.Any())
+
                 {
+
                     _logger.LogWarning("No users found in the database.");
+
                     return new List<User>();
+
                 }
 
-                var usersWithDetails = usersSnapshot
-                    .Where(u => u.Object.EmployeeDetails != null)
-                    .Select(u => u.Object)
+                // Map Firebase response to a list of User objects (Uid, Email, Password, Role only)
+
+                var users = firebaseResponse
+
+                    .Select(kv => new User
+
+                    {
+
+                        Uid = kv.Key, // Set the UID from Firebase key
+
+                        
+
+                    })
+
                     .ToList();
 
-                _logger.LogInformation($"Successfully retrieved {usersWithDetails.Count} users with employee details.");
-                return usersWithDetails;
+                _logger.LogInformation($"Successfully retrieved {users.Count} users.");
+
+                return users;
+
             }
+
             catch (Exception ex)
+
             {
+
                 _logger.LogError($"Error retrieving users: {ex.Message}");
+
                 return new List<User>(); // Return an empty list to avoid breaking the application flow
+
             }
+
         }
+
+
 
         // Fetch an employee by ID from Firebase
         public async Task<User> GetUserByIdAsync(string id)
@@ -179,7 +207,7 @@ namespace Easy5Coding_WIL
 
             try
             {
-                var user = await _firebaseClient.Child("Users").Child(id).OnceSingleAsync<User>();
+                var user = await _firebaseClient.Child("Users").Child(id).Child("EmployeeDetails").OnceSingleAsync<User>();
 
                 if (user == null)
                 {

@@ -7,6 +7,7 @@ namespace Easy5Coding_WIL.Models
         public string Address { get; set; } = string.Empty;
         public string ContactEmail { get; set; } = string.Empty;
         public string ContactPhone { get; set; } = string.Empty;
+        public DateTime DateOfBirth { get; set; } // Add DateOfBirth field
         public string Department { get; set; } = string.Empty;
         public string EmergencyContactName { get; set; } = string.Empty;
         public string EmergencyContactPhone { get; set; } = string.Empty;
@@ -21,7 +22,7 @@ namespace Easy5Coding_WIL.Models
         public DateTime? EmploymentEndDate { get; set; } // Nullable to handle cases where not applicable
         public int LeaveBalance { get; set; }
         public bool IsActive { get; set; }
-        public DateTime DateOfBirth { get; set; } // Add DateOfBirth field
+        
 
         // Constructor to initialize default values if needed
         public EmployeeDetails()
